@@ -1,0 +1,18 @@
+.popup__item {
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  font-size: 14px;
+  line-height: 16.94px;
+  background-color: #fff;
+  outline: 0;
+  margin-top: 54px;
+  padding: 0 0 13px 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .popup__item {
+    margin-top: 75px;
+  }
+}

@@ -1,0 +1,18 @@
+.element__icon-heart {
+  width: 22px;
+  height: 19px;
+  margin-top: 6px;
+  background-image: url(../../../images/Vector-heart.svg);
+  cursor: pointer;
+}
+
+
+
+.element__icon-heart:hover {
+  opacity: 0.5;
+}
+
+.element__icon-heart:active {
+ background-image: url(../../../images/Vector-heart-dark.svg);
+ opacity: 1;
+}

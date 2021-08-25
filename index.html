@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./pages/index.css">
+    <title>Mesto</title>
+  </head>
+  <body class="page">
+    <header class="header">
+      <img src="./images/Vector.svg" alt="Логотип" class="header__logo">
+    </header>
+    <main class="content">
+      <section class="profile profile_position">
+        <div class="profile__container">
+          <img src="./images/Avatar.jpg" class="profile__avatar" alt="Аватар">
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <div class="profile__edit-button"></div>
+            <p class="profile__profession">Исследователь океана</p>
+          </div>
+        </div>
+        <div class="profile__add-button"></div>
+      </section>
+      <section class="elements elements__position">
+        <div class="element">
+          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="">
+          <div class="element__title-container">
+            <h2 class="element__title">Карачаевск</h2>
+            <div class="element__icon-heart"></div>
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/Elbrus.jpg" class="element__image" alt="">
+          <div class="element__title-container">
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <div class="element__icon-heart"></div>
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/dombai.jpg" class="element__image" alt="">
+          <div class="element__title-container">
+            <h2 class="element__title">Домбай</h2>
+            <div class="element__icon-heart"></div>
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/Elbrus.jpg" class="element__image" alt="">
+          <div class="element__title-container">
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <div class="element__icon-heart"></div>
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/dombai.jpg" class="element__image" alt="">
+          <div class="element__title-container">
+            <h2 class="element__title">Домбай</h2>
+            <div class="element__icon-heart"></div>
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="">
+          <div class="element__title-container">
+            <h2 class="element__title">Карачаевск-Черкесский</h2>
+            <div class="element__icon-heart"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__text">&copy; 2020 Mesto Russia</p>
+    </footer>
+    <div class="popup">
+      <div class="popup__container">
+        <h3 class="popup__heading">Редактировать профиль</h3>
+        <form action="#" class="popup__admin">
+          <input type="text" class="popup__item" name="full-name" id="full-name" />
+          <input type="text" class="popup__item popup__item_position_last" name="profession" id="profession"/>
+          <input type="submit" class="popup__button" value="Сохранить">
+        </form>
+        <div class="popup__close"></div>
+      </div>
+    </div>
+  </body>
+</html>
