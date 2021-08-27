@@ -12,58 +12,58 @@
       <img src="./images/Vector.svg" alt="Логотип" class="header__logo">
     </header>
     <main class="content">
-      <section class="profile profile_position">
+      <section class="profile">
         <div class="profile__container">
           <img src="./images/Avatar.jpg" class="profile__avatar" alt="Аватар">
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <div class="profile__edit-button"></div>
+            <button class="profile__edit-button"></button>
             <p class="profile__profession">Исследователь океана</p>
           </div>
         </div>
-        <div class="profile__add-button"></div>
+        <button class="profile__add-button"></button>
       </section>
-      <section class="elements elements__position">
+      <section class="elements">
         <div class="element">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="">
+          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="Фото Карачаевск">
           <div class="element__title-container">
             <h2 class="element__title">Карачаевск</h2>
-            <div class="element__icon-heart"></div>
+            <button class="element__icon-heart"></button>
           </div>
         </div>
         <div class="element">
-          <img src="./images/Elbrus.jpg" class="element__image" alt="">
+          <img src="./images/Elbrus.jpg" class="element__image" alt="Фото Эльбрус">
           <div class="element__title-container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <div class="element__icon-heart"></div>
+            <button class="element__icon-heart"></button>
           </div>
         </div>
         <div class="element">
-          <img src="./images/dombai.jpg" class="element__image" alt="">
+          <img src="./images/dombai.jpg" class="element__image" alt="Фото Домбай">
           <div class="element__title-container">
             <h2 class="element__title">Домбай</h2>
-            <div class="element__icon-heart"></div>
+            <button class="element__icon-heart"></button>
           </div>
         </div>
         <div class="element">
-          <img src="./images/Elbrus.jpg" class="element__image" alt="">
+          <img src="./images/Elbrus.jpg" class="element__image" alt="Фото Эльбрус">
           <div class="element__title-container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <div class="element__icon-heart"></div>
+            <button class="element__icon-heart"></button>
           </div>
         </div>
         <div class="element">
-          <img src="./images/dombai.jpg" class="element__image" alt="">
+          <img src="./images/dombai.jpg" class="element__image" alt="Фото Домбай">
           <div class="element__title-container">
             <h2 class="element__title">Домбай</h2>
-            <div class="element__icon-heart"></div>
+            <button class="element__icon-heart"></button>
           </div>
         </div>
         <div class="element">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="">
+          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="Фото Карачаевск-Черкесский">
           <div class="element__title-container">
             <h2 class="element__title">Карачаевск-Черкесский</h2>
-            <div class="element__icon-heart"></div>
+            <button class="element__icon-heart"></button>
           </div>
         </div>
       </section>
@@ -74,12 +74,12 @@
     <div class="popup">
       <div class="popup__container">
         <h3 class="popup__heading">Редактировать профиль</h3>
-        <form action="#" class="popup__admin">
-          <input type="text" class="popup__item" name="full-name" id="full-name" />
-          <input type="text" class="popup__item popup__item_position_last" name="profession" id="profession"/>
-          <input type="submit" class="popup__button" value="Сохранить">
+        <form action="#" class="popup__admin" name="add-profile">
+          <input type="text" class="popup__item" name="full-name" id="full-name" value="Жак-Ив Кусто" placeholder="Введите полное имя"/>
+          <input type="text" class="popup__item" name="profession" id="profession" value="Исследователь океана" placeholder="Введите свою профессию"/>
+          <button class="popup__button">Сохранить</button>
         </form>
-        <div class="popup__close"></div>
+        <button class="popup__close"></button>
       </div>
     </div>
   </body>

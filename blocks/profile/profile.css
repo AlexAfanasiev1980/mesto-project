@@ -3,17 +3,18 @@
  justify-content: space-between;
  margin: 0 auto;
  flex-wrap: wrap;
+ padding: 40px 0 51px 0;
 }
 
 @media screen and (max-width:1023px) {
   .profile {
-    padding: 0 27px;
+    padding: 40px 27px 51px 27px;
    }
 }
 
 @media screen and (max-width:635px) {
   .profile {
-    padding: 0 19px;
+    padding: 42px 19px 50px 19px;
     justify-content: center;
    }
 }

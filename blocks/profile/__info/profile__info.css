@@ -1,12 +1,12 @@
 .profile__info {
-  height: 73px;
-  margin: 22px 0 0 30px;
+  min-height: 73px;
+  margin: 29px 0 0 32px;
   display: grid;
   grid-template-columns: repeat(2, fit-content(300px));
-  grid-template-rows: repeat(2, fit-content(30px));
+  grid-template-rows: repeat(2, fit-content(40px));
   align-items: flex-end;
-  row-gap: 9px;
-  column-gap: 18px;
+  row-gap: 7px;
+  column-gap: 21px;
 }
 
 @media screen and (max-width:1023px) {
@@ -17,6 +17,7 @@
 
 @media screen and (max-width:390px) {
   .profile__info {
-    justify-items: center;
+    column-gap: 11px;
+    margin: 29px 0 0 28px;
   }
 }

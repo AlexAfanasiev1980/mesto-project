@@ -11,6 +11,10 @@
   padding: 0 0 13px 0;
 }
 
+.popup__item:nth-last-child(2) {
+  margin-top: 30px;
+}
+
 @media screen and (max-width: 1023px) {
   .popup__item {
     margin-top: 75px;

@@ -11,4 +11,6 @@
   -ms-font-feature-settings: "kern" 1;
   font-feature-settings: "kern";
   color: #fff;
+  min-width: 320px;
+  box-sizing: border-box;
 }

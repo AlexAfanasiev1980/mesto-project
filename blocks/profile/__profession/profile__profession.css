@@ -10,3 +10,9 @@
     line-height: 1.21;
   }
 }
+
+@media screen and (max-width:390px) {
+  .profile__profession {
+    justify-self: center;
+  }
+}

@@ -1,16 +1,14 @@
 .popup {
   width: 100vw;
+  min-width: 320px;
+  box-sizing: border-box;
   height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
-  z-index: 2;
   top: 0;
   left: 0;
-  display: none;
-}
-
-.first {
-  width: 100px;
-  height: 200px;
-  background-color: #fff;
+  z-index: 2;
 }

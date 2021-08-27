@@ -4,9 +4,9 @@
   margin-top: 6px;
   background-image: url(../../../images/Vector-heart.svg);
   cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
-
-
 
 .element__icon-heart:hover {
   opacity: 0.5;
