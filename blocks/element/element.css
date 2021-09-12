@@ -3,7 +3,8 @@
   min-height: 361px;
   background: #fff;
   border-radius: 10px;
-  /* margin: 0 17px 20px 0; */
+  overflow: hidden;
+  position: relative;
 }
 
 .element:nth-of-type(3n) {

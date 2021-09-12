@@ -24,7 +24,7 @@
         <button type="button" class="profile__add-button"></button>
       </section>
       <section class="elements">
-        <div class="element">
+        <!-- <div class="element">
           <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="Фото Карачаевск">
           <div class="element__title-container">
             <h2 class="element__title">Карачаевск</h2>
@@ -58,20 +58,20 @@
             <h2 class="element__title">Домбай</h2>
             <button type="button" class="element__icon-heart"></button>
           </div>
-        </div>
-        <div class="element">
+        </div> -->
+        <!-- <div class="element">
           <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="Фото Карачаевск-Черкесский">
           <div class="element__title-container">
             <h2 class="element__title">Карачаевск-Черкесский</h2>
             <button type="button" class="element__icon-heart"></button>
           </div>
-        </div>
+        </div> -->
       </section>
     </main>
     <footer class="footer">
       <p class="footer__text">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_profile">
       <div class="popup__container">
         <h3 class="popup__heading">Редактировать профиль</h3>
         <form action="#" class="popup__admin" name="add-profile">
@@ -82,5 +82,27 @@
         <button type="button" class="popup__close"></button>
       </div>
     </div>
+    <div class="popup popup_type_card">
+      <div class="popup__container">
+        <h3 class="popup__heading">Новое место</h3>
+        <form action="#" class="popup__card-content" name="new-place">
+          <input type="text" class="popup__item" name="title" id="title" value="" placeholder="Название"/>
+          <input type="text" class="popup__item" name="link" id="link" value="" placeholder="Ссылка на картинку"/>
+          <button type="submit" class="popup__button">Создать</button>
+        </form>
+        <button type="button" class="popup__close"></button>
+      </div>
+    </div>
+    <template id="element">
+      <div class="element">
+        <img src="" class="element__image" alt="">
+        <div class="element__title-container">
+          <h2 class="element__title"></h2>
+          <button type="button" class="element__icon-heart"></button>
+        </div>
+        <button type="button" class="element__delete"></button>
+      </div>
+    </template>
+    <script src="./scripts/script.js"></script>
   </body>
 </html>

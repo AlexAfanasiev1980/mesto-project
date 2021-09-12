@@ -1,0 +1,26 @@
+.element__delete {
+  background-image: url(../../../images/Delete.svg);
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  width: 18px;
+  height: 19px;
+  border: none;
+  background-color: transparent;
+}
+
+.element__delete:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+/* @media screen and (max-width: 1023px) {
+  .popup__close {
+    background-size: 20px;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    right: 0;
+    top: -36px;
+  }
+} */
