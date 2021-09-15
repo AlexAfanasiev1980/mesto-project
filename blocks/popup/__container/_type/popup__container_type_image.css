@@ -1,0 +1,13 @@
+.popup__container_type_image {
+  border-radius: 0px;
+  width: auto;
+  background: none;
+  padding: 0;
+  max-width: 75vw;
+  max-height: 75vh;
+  box-shadow: none;
+  min-height: auto;
+  object-fit: contain;
+  text-align: center;
+}
+
