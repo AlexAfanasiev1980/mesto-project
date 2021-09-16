@@ -1,41 +1,16 @@
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const popupCloseButton = document.querySelectorAll('.popup__close');
+const popupCloseButtons = document.querySelectorAll('.popup__close');
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupCard = document.querySelector('.popup_type_card');
 const popupTypeImage = document.querySelector('.popup_type_image');
 const popupImage = document.querySelector('.popup__image');
-const popup = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 const profileForm = document.querySelector('.popup__admin');
 const cardForm = document.querySelector('.popup__card-content');
 const profileName = document.querySelector('.profile__name');
+const usersOnline = document.querySelector('.elements');
 let profileProfession = document.querySelector('.profile__profession');
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
 
 function popupOpened(popupElement) {
   popupElement.classList.add('popup_opened');
@@ -55,13 +30,12 @@ addButton.addEventListener('click', function () {
   popupOpened(popupCard);
 });
 
-for (let i=0; i < popupCloseButton.length; i++) {
-  popupCloseButton[i].addEventListener('click', function () {
-    popupClosed(popup[i]);
-  });
-};
 
-function formSubmitHandler(evt) {
+popupCloseButtons.forEach((closeButton, i) => {
+  closeButton.addEventListener('click', () => popupClosed(popups[i]))
+});
+
+function submitFormProfile(evt) {
   evt.preventDefault();
   const fullName = document.querySelector('#full-name');
   const profession = document.querySelector('#profession');
@@ -70,10 +44,10 @@ function formSubmitHandler(evt) {
   profileProfession.textContent = profession.value;
 }
 
-profileForm.addEventListener('submit', formSubmitHandler);
+profileForm.addEventListener('submit', submitFormProfile);
 
 //Добавление новых карточек
-function formSubmitAddCard(evt) {
+function submitFormAddCard(evt) {
   evt.preventDefault();
   const title = document.querySelector('#title').value;
   const cardLink = document.querySelector('#link').value;
@@ -81,45 +55,52 @@ function formSubmitAddCard(evt) {
     alert('Заполните все поля формы');
   } else {
     popupClosed(popupCard);
-    const card = [{
+    const card = {
       name: title,
       link: cardLink
-    }];
-    addElements(card);
+    };
+    addCard(card);
+    cardForm.reset();
   }
 }
 
 //Слушатель на кнопку добавления новых карточек
-cardForm.addEventListener('submit', formSubmitAddCard);
+cardForm.addEventListener('submit', submitFormAddCard);
 
-//Добавление карточек при загрузке страницы
-function addElements(initialCards) { 
+//Функция создания карточки
+function createCard(cardData) { 
   const userTemplate = document.querySelector("#element").content;
-  const usersOnline = document.querySelector('.elements');
-  initialCards.forEach(element => {
-    const userElement = userTemplate.querySelector('.element').cloneNode(true);
-    userElement.querySelector('.element__image').src = element.link;
-    userElement.querySelector('.element__title').textContent = element.name;
-    userElement.querySelector('.element__title').alt = 'Фото ' + element.name;
-    userElement.querySelector('.element__icon-heart').addEventListener('click', function () {
-    userElement.querySelector('.element__icon-heart').classList.toggle('element__icon-heart_active');
-    });
-    const deleteButton = userElement.querySelector('.element__delete');
-    deleteButton.addEventListener('click', function () {
-      const listItem = deleteButton.closest('.element');
-      listItem.remove();
-      });
-    const image = userElement.querySelector('.element__image');
-    image.addEventListener('click', function () {
-      const popupText = document.querySelector('.popup__text');
-      popupText.textContent = userElement.querySelector('.element__title').textContent;
-      popupImage.src = image.src;
-      popupImage.alt = image.alt;
-      popupOpened(popupTypeImage);
-      });
-    usersOnline.prepend(userElement);
+  const userElement = userTemplate.querySelector('.element').cloneNode(true);
+  userElement.querySelector('.element__image').src = cardData.link;
+  userElement.querySelector('.element__title').textContent = cardData.name;
+  userElement.querySelector('.element__title').alt = 'Фото ' + cardData.name;
+  userElement.querySelector('.element__icon-heart').addEventListener('click', () => {
+  userElement.querySelector('.element__icon-heart').classList.toggle('element__icon-heart_active');
   });
+  const deleteButton = userElement.querySelector('.element__delete');
+  deleteButton.addEventListener('click', function () {
+    const listItem = deleteButton.closest('.element');
+    listItem.remove();
+  });
+  const image = userElement.querySelector('.element__image');
+  image.addEventListener('click', function () {
+    const popupText = document.querySelector('.popup__text');
+    popupText.textContent = userElement.querySelector('.element__title').textContent;
+    popupImage.src = image.src;
+    popupImage.alt = image.alt;
+    popupOpened(popupTypeImage);
+    });
+  return userElement;
 };
 
+//Функция добавления новой карточки в DOM
+function addCard(cardData) {
+  const newCard = createCard(cardData);
+  usersOnline.prepend(newCard);
+}
+
 //Инициируем функцию добавления карточек при загрузке страницы
-addElements(initialCards);
+initialCards.forEach(cardData => {
+  const newCard = createCard(cardData);
+  usersOnline.prepend(newCard)
+})
