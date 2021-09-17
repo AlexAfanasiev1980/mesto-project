@@ -71,18 +71,19 @@ cardForm.addEventListener('submit', submitFormAddCard);
 function createCard(cardData) { 
   const userTemplate = document.querySelector("#element").content;
   const userElement = userTemplate.querySelector('.element').cloneNode(true);
-  userElement.querySelector('.element__image').src = cardData.link;
+  const image = userElement.querySelector('.element__image');
+  const like = userElement.querySelector('.element__icon-heart');
+  image.src = cardData.link;
+  image.alt = 'Фото ' + cardData.name;
   userElement.querySelector('.element__title').textContent = cardData.name;
-  userElement.querySelector('.element__title').alt = 'Фото ' + cardData.name;
-  userElement.querySelector('.element__icon-heart').addEventListener('click', () => {
-  userElement.querySelector('.element__icon-heart').classList.toggle('element__icon-heart_active');
+  like.addEventListener('click', () => {
+  like.classList.toggle('element__icon-heart_active');
   });
   const deleteButton = userElement.querySelector('.element__delete');
   deleteButton.addEventListener('click', function () {
     const listItem = deleteButton.closest('.element');
     listItem.remove();
   });
-  const image = userElement.querySelector('.element__image');
   image.addEventListener('click', function () {
     const popupText = document.querySelector('.popup__text');
     popupText.textContent = userElement.querySelector('.element__title').textContent;
