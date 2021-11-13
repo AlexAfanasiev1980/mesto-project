@@ -16,8 +16,10 @@ function popupOpened(popupElement) {
   popupElement.classList.add('popup_opened');
 }
 
-function popupClosed(popupElement) {
+function popupClosed(evt, popupElement) {
+  if (evt.target.classList.contains("popup__close")||evt.target.classList.contains("popup")||evt.target.classList.contains("popup__button")||evt.key === 'Escape'){
   popupElement.classList.remove('popup_opened');
+  }
 }
 
 editButton.addEventListener('click', function () {
@@ -26,20 +28,18 @@ editButton.addEventListener('click', function () {
   popupOpened(popupProfile);
 });
 
-addButton.addEventListener('click', function () {
-  popupOpened(popupCard);
-});
+addButton.addEventListener('click', () => popupOpened(popupCard));
 
-
-popupCloseButtons.forEach((closeButton, i) => {
-  closeButton.addEventListener('click', () => popupClosed(popups[i]))
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => popupClosed(evt, popup));
+  window.addEventListener('keydown', (evt) => popupClosed(evt, popup));
 });
 
 function submitFormProfile(evt) {
   evt.preventDefault();
   const fullName = document.querySelector('#full-name');
   const profession = document.querySelector('#profession');
-  popupClosed(popupProfile);
+  popupClosed(evt, popupProfile);
   profileName.textContent = fullName.value;
   profileProfession.textContent = profession.value;
 }
@@ -54,7 +54,7 @@ function submitFormAddCard(evt) {
   if (title === '' || cardLink === '') {
     alert('Заполните все поля формы');
   } else {
-    popupClosed(popupCard);
+    popupClosed(evt, popupCard);
     const card = {
       name: title,
       link: cardLink
