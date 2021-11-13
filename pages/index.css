@@ -33,3 +33,6 @@
 @import url(../blocks/element/__delete/element__delete.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);
+@import url(../blocks/form/__input-error/form__input-error.css);
+@import url(../blocks/form/__input/_type/form__input_type_error.css);
+@import url(../blocks/popup/__button/_inactive/popup__button_inactive.css);
