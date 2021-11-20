@@ -31,4 +31,3 @@ function submitFormProfile(evt) {
 
 export {popupOpened, popupClosed, submitFormProfile, popupProfile, profileName};
 import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation, formElements} from './validate.js';
-import {createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline} from './card.js';
