@@ -5,7 +5,7 @@ const popupImage = document.querySelector('.popup__image');
 const cardForm = document.querySelector('.popup__card-content');
 const usersOnline = document.querySelector('.elements');
 
-function createCard(cardData) { 
+function createCard(cardData) {
   const userTemplate = document.querySelector("#element").content;
   const userElement = userTemplate.querySelector('.element').cloneNode(true);
   const image = userElement.querySelector('.element__image');
@@ -23,6 +23,7 @@ function createCard(cardData) {
   });
   image.addEventListener('click', function () {
     const popupText = document.querySelector('.popup__text');
+    console.log(`Значение ${document.querySelector('.popup__text')}`);
     popupText.textContent = userElement.querySelector('.element__title').textContent;
     popupImage.src = image.src;
     popupImage.alt = image.alt;
