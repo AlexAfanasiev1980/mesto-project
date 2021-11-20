@@ -4,17 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
   </head>
   <body class="page">
     <header class="header">
-      <img src="./images/Vector.svg" alt="Логотип" class="header__logo">
+      <img src="<%=require('./images/Vector.svg')%>" alt="Логотип" class="header__logo">
     </header>
     <main class="content">
       <section class="profile">
         <div class="profile__container">
-          <img src="./images/Avatar.jpg" class="profile__avatar" alt="Аватар">
+          <img src="<%=require('./images/Avatar.jpg')%>" class="profile__avatar" alt="Аватар">
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button type="button" class="profile__edit-button"></button>
@@ -76,7 +75,5 @@
         <button type="button" class="element__delete"></button>
       </div>
     </template>
-    <script src="./scripts/initial-cards.js"></script>
-    <script src="./scripts/script.js"></script>
   </body>
 </html>
