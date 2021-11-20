@@ -11,9 +11,10 @@
   padding: 0 0 13px 0;
 }
 
-.popup__item:nth-last-child(2) {
-  margin-top: 30px;
+.popup__item:last-of-type {
+  margin-top: 13px;
 }
+
 
 @media screen and (max-width: 1023px) {
   .popup__item {

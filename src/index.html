@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+  </head>
+  <body class="page">
+    <header class="header">
+      <img src="<%=require('./images/Vector.svg')%>" alt="Логотип" class="header__logo">
+    </header>
+    <main class="content">
+      <section class="profile">
+        <div class="profile__container">
+          <img src="<%=require('./images/Avatar.jpg')%>" class="profile__avatar" alt="Аватар">
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="button" class="profile__edit-button"></button>
+            <p class="profile__profession">Исследователь океана</p>
+          </div>
+        </div>
+        <button type="button" class="profile__add-button"></button>
+      </section>
+      <section class="elements">
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__text">&copy; 2020 Mesto Russia</p>
+    </footer>
+    <div class="popup popup_type_profile">
+      <div class="popup__container">
+        <h3 class="popup__heading">Редактировать профиль</h3>
+        <form action="#" class="form popup__admin" name="add-profile" novalidate>
+          <input type="text" class="form__input popup__item" name="full-name" id="full-name" value="Жак-Ив Кусто" placeholder="Введите полное имя" minlength="2" maxlength="40" required />
+          <span class="form__input-error full-name-error"></span>
+          <input type="text" class="form__input popup__item" name="profession" id="profession" value="Исследователь океана" placeholder="Введите свою профессию" minlength="2" maxlength="200" required />
+          <span class="form__input-error profession-error"></span>
+          <button type="submit" class="popup__button">Сохранить</button>
+        </form>
+        <button type="button" class="popup__close"></button>
+      </div>
+    </div>
+    <div class="popup popup_type_card">
+      <div class="popup__container">
+        <h3 class="popup__heading">Новое место</h3>
+        <form action="#" class="form popup__card-content" name="new-place" novalidate>
+          <input type="text" class="form__input popup__item" name="title" id="title" value="" placeholder="Название" minlength="2" maxlength="30" required/>
+          <span class="form__input-error title-error"></span>
+          <input type="url" class="form__input popup__item" name="link" id="link" value="" placeholder="Ссылка на картинку" required/>
+          <span class="form__input-error link-error"></span>
+          <button type="submit" class="popup__button">Создать</button>
+        </form>
+        <button type="button" class="popup__close"></button>
+      </div>
+    </div>
+    <div class="popup popup_type_avatar">
+      <div class="popup__container">
+        <h3 class="popup__heading">Обновить аватар</h3>
+        <form action="#" class="form popup__avatar" name="avatar" novalidate>
+          <input type="url" class="form__input popup__item" name="link-avatar" id="link-avatar" value="" placeholder="Ссылка на картинку" required/>
+          <span class="form__input-error link-avatar-error"></span>
+          <button type="submit" class="popup__button">Сохранить</button>
+        </form>
+        <button type="button" class="popup__close"></button>
+      </div>
+    </div>
+    <div class="popup popup_type_image">
+      <div class="popup__container popup__container_type_image">
+        <img src="" alt="" class="popup__image">
+        <button type="button" class="popup__close"></button>
+        <p class="popup__text"></p>
+      </div>
+    </div>
+    <template id="element">
+      <div class="element">
+        <img src="" class="element__image" alt="">
+        <div class="element__title-container">
+          <h2 class="element__title"></h2>
+          <button type="button" class="element__icon-heart"></button>
+        </div>
+        <button type="button" class="element__delete"></button>
+      </div>
+    </template>
+  </body>
+</html>
