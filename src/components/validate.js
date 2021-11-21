@@ -1,7 +1,4 @@
 //валидация форм
-const formElements = document.querySelectorAll('.form');
-
-
 const showInputError = (formElement, inputElement, errorMessage, objectForm) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(objectForm.inputErrorClass);
@@ -51,7 +48,7 @@ const toggleButtonState = (inputList, buttonElement, objectForm) => {
 }
 
 const enableValidation = (objectForm) => {
-  const formList = Array.from(formElements);
+  const formList = Array.from(document.querySelectorAll(objectForm.formSelector));
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
@@ -61,4 +58,4 @@ const enableValidation = (objectForm) => {
 }
 
 
-export {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation, formElements};
+export {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation};
