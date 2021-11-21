@@ -4,14 +4,17 @@ const popupTypeImage = document.querySelector('.popup_type_image');
 const popupImage = document.querySelector('.popup__image');
 const cardForm = document.querySelector('.popup__card-content');
 const usersOnline = document.querySelector('.elements');
+const popupText = document.querySelector('.popup__text');
 
 function createCard(cardData) {
   const userTemplate = document.querySelector("#element").content;
   const userElement = userTemplate.querySelector('.element').cloneNode(true);
   const image = userElement.querySelector('.element__image');
   const like = userElement.querySelector('.element__icon-heart');
+  const counterLikes = userElement.querySelector('.element__counter-likes');
   image.src = cardData.link;
   image.alt = 'Фото ' + cardData.name;
+  counterLikes.textContent = cardData.likes;
   userElement.querySelector('.element__title').textContent = cardData.name;
   like.addEventListener('click', () => {
   like.classList.toggle('element__icon-heart_active');
@@ -22,12 +25,10 @@ function createCard(cardData) {
     listItem.remove();
   });
   image.addEventListener('click', function () {
-    const popupText = document.querySelector('.popup__text');
-    console.log(`Значение ${document.querySelector('.popup__text')}`);
     popupText.textContent = userElement.querySelector('.element__title').textContent;
     popupImage.src = image.src;
     popupImage.alt = image.alt;
-    popupOpened(popupTypeImage);
+    openPopup(popupTypeImage);
     });
   return userElement;
 };
@@ -45,16 +46,43 @@ function submitFormAddCard(evt) {
   if (title === '' || cardLink === '') {
     alert('Заполните все поля формы');
   } else {
-    popupClosed(evt, popupCard);
+    closeByClick(evt);
     const card = {
       name: title,
-      link: cardLink
+      link: cardLink,
+      likes: 0
     };
-    console.log(card);
     addCard(card);
     cardForm.reset();
+    cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
   }
 }
 
+function addCards() {
+  loadCards()
+  .then(res => res.json())
+  .then((result) => {
+    let initialCards = [];
+    let objectCard = new Object();
+    result.forEach((element, index) => {
+      objectCard = {};
+      objectCard.name = element.name;
+      objectCard.link = element.link;
+      objectCard.likes = element.likes.length;
+      initialCards[index] = objectCard;
+    });
+    return initialCards;
+  })
+  .then((initialCards) => {
+    initialCards.forEach(cardData => {
+      const newCard = createCard(cardData);
+      usersOnline.prepend(newCard)
+    })
+  })
+}
+
+addCards();
+
 export {createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline};
-import {popupOpened, popupClosed, submitFormProfile, popupProfile, profileName} from './modal.js';
+import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, closeByClick} from './modal.js';
+import {loadCards} from './initial-cards.js';

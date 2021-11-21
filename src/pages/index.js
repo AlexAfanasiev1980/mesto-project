@@ -9,29 +9,29 @@ const profileForm = document.querySelector('.popup__admin');
 editButton.addEventListener('click', function () {
   document.querySelector('#full-name').value = profileName.textContent;
   document.querySelector('#profession').value = profileProfession.textContent;
-  popupOpened(popupProfile);
+  openPopup(popupProfile);
 });
 
-addButton.addEventListener('click', () => popupOpened(popupCard));
+addButton.addEventListener('click', () => openPopup(popupCard));
 
-avatarButton.addEventListener('click', () => popupOpened(popupAvatar));
+avatarButton.addEventListener('click', () => openPopup(popupAvatar));
 
 profileForm.addEventListener('submit', submitFormProfile);
 
 //Слушатель на кнопку добавления новых карточек
 cardForm.addEventListener('submit', submitFormAddCard);
 
-//слушатели для закрытия попапа при нажатии на оверлей и Escape
+//слушатели для закрытия попапа при нажатии на оверлей
 popups.forEach((popup) => {
-  popup.addEventListener('click', (evt) => popupClosed(evt, popup));
-  // document.addEventListener('keydown', (evt) => popupClosed(evt, popup));
+  popup.addEventListener('click', (evt) => closeByClick(evt));
 });
 
 //Инициируем функцию добавления карточек при загрузке страницы
-initialCards.forEach(cardData => {
-  const newCard = createCard(cardData);
-  usersOnline.prepend(newCard)
-})
+
+// initialCards.forEach(cardData => {
+//   const newCard = createCard(cardData);
+//   usersOnline.prepend(newCard)
+// })
 
 //инициализация валидации
 enableValidation({
@@ -41,10 +41,25 @@ enableValidation({
   inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'form__input_type_error',
   errorClass: 'form__input-error_active'
-});
+}); 
+
+fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
+    headers: {
+      authorization: 'e67bb179-254e-4b3c-8860-7a122085afb4'
+    }
+  })
+    .then(res => res.json())
+    .then((result) => {
+      profileName.textContent = result.name;
+      profileProfession.textContent = result.about;
+      document.querySelector('.profile__avatar').src = result.avatar;
+    }); 
+
+
+
 
 import './index.css';
-import {initialCards} from '../components/initial-cards.js';
+import {loadCards} from '../components/initial-cards.js';
 import {createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline} from '../components/card.js';
-import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation, formElements} from '../components/validate.js';
-import {popupOpened, popupClosed, submitFormProfile, popupProfile, profileName, profileProfession} from '../components/modal.js';
+import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation} from '../components/validate.js';
+import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick} from '../components/modal.js';
