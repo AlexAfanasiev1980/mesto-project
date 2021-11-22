@@ -47,6 +47,7 @@ const toggleButtonState = (inputList, buttonElement, objectForm) => {
   }
 }
 
+
 const enableValidation = (objectForm) => {
   const formList = Array.from(document.querySelectorAll(objectForm.formSelector));
   formList.forEach((formElement) => {
