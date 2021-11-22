@@ -28,10 +28,10 @@ popups.forEach((popup) => {
 
 //Инициируем функцию добавления карточек при загрузке страницы
 
-// initialCards.forEach(cardData => {
-//   const newCard = createCard(cardData);
-//   usersOnline.prepend(newCard)
-// })
+initialCards.forEach(cardData => {
+  const newCard = createCard(cardData);
+  usersOnline.prepend(newCard)
+})
 
 //инициализация валидации
 enableValidation({
@@ -43,23 +43,8 @@ enableValidation({
   errorClass: 'form__input-error_active'
 }); 
 
-fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
-    headers: {
-      authorization: 'e67bb179-254e-4b3c-8860-7a122085afb4'
-    }
-  })
-    .then(res => res.json())
-    .then((result) => {
-      profileName.textContent = result.name;
-      profileProfession.textContent = result.about;
-      document.querySelector('.profile__avatar').src = result.avatar;
-    }); 
-
-
-
-
 import './index.css';
-import {loadCards} from '../components/initial-cards.js';
+import {initialCards} from '../components/initial-cards.js';
 import {createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline} from '../components/card.js';
 import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation} from '../components/validate.js';
 import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick} from '../components/modal.js';

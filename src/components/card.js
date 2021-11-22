@@ -14,7 +14,6 @@ function createCard(cardData) {
   const counterLikes = userElement.querySelector('.element__counter-likes');
   image.src = cardData.link;
   image.alt = 'Фото ' + cardData.name;
-  counterLikes.textContent = cardData.likes;
   userElement.querySelector('.element__title').textContent = cardData.name;
   like.addEventListener('click', () => {
   like.classList.toggle('element__icon-heart_active');
@@ -46,7 +45,7 @@ function submitFormAddCard(evt) {
   if (title === '' || cardLink === '') {
     alert('Заполните все поля формы');
   } else {
-    closeByClick(evt);
+    closePopup(document.querySelector('.popup_opened'));
     const card = {
       name: title,
       link: cardLink,
@@ -58,31 +57,6 @@ function submitFormAddCard(evt) {
   }
 }
 
-function addCards() {
-  loadCards()
-  .then(res => res.json())
-  .then((result) => {
-    let initialCards = [];
-    let objectCard = new Object();
-    result.forEach((element, index) => {
-      objectCard = {};
-      objectCard.name = element.name;
-      objectCard.link = element.link;
-      objectCard.likes = element.likes.length;
-      initialCards[index] = objectCard;
-    });
-    return initialCards;
-  })
-  .then((initialCards) => {
-    initialCards.forEach(cardData => {
-      const newCard = createCard(cardData);
-      usersOnline.prepend(newCard)
-    })
-  })
-}
-
-addCards();
-
 export {createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline};
 import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, closeByClick} from './modal.js';
-import {loadCards} from './initial-cards.js';
+import {initialCards} from './initial-cards.js';
