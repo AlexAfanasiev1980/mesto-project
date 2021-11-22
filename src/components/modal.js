@@ -13,6 +13,7 @@ function closeByEscape(evt) {
 }
 
 function closeByClick(evt) {
+  
   if (evt.target.classList.contains("popup__close")||evt.target.classList.contains("popup")||evt.target.classList.contains("popup__button")) {
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
