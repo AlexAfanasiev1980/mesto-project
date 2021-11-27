@@ -27,7 +27,7 @@ cardForm.addEventListener('submit', submitFormAddCard);
 
 acceptForm.addEventListener('submit', () => {
   const deletedCard = document.querySelector('.element__deletion');
-  closePopup(acceptForm);
+  closePopup(document.querySelector('.popup_type_accept'));
   deletedCard.remove();
   deleteCard(deletedCard.id)
   .then ((res => {
@@ -74,4 +74,4 @@ import './index.css';
 import {addCards, createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline, popupAccept} from '../components/card.js';
 import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation} from '../components/validate.js';
 import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick, replaceAvatar, avatar} from '../components/modal.js';
-import { loadCards, addCardServer, deleteCard, addAvatar } from '../components/api.js';
+import { loadCards, addCardServer, deleteCard, addAvatar, addProfileServer } from '../components/api.js';

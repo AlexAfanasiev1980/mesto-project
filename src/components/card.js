@@ -8,7 +8,6 @@ const popupText = document.querySelector('.popup__text');
 const popupAccept = document.querySelector('.popup_type_accept');
 
 function createCard(cardData) {
-  // console.log(cardData);
   const userTemplate = document.querySelector("#element").content;
   const userElement = userTemplate.querySelector('.element').cloneNode(true);
   const image = userElement.querySelector('.element__image');
@@ -61,7 +60,6 @@ function addCard(cardData) {
 
 //Добавление новых карточек
 function submitFormAddCard(evt) {
-  evt.stopPropagation();
   const title = document.querySelector('#title').value;
   const cardLink = document.querySelector('#link').value;
   if (title === '' || cardLink === '') {
@@ -70,13 +68,12 @@ function submitFormAddCard(evt) {
     const card = {
       name: title,
       link: cardLink,
+      arrlikes: [],
+      username: profileName.textContent,
       likes: 0
     };
     addCardServer(card);
-    closeByClick(evt);
     addCard(card);
-    cardForm.reset();
-    cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
   }
 }
 

@@ -8,7 +8,7 @@ const config = {
 
 function addCardServer(card) {
   renderLoading(true);
-  fetch(`${config.baseUrl}/cards`, {
+  return fetch(`${config.baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: 'e67bb179-254e-4b3c-8860-7a122085afb4',
@@ -30,6 +30,9 @@ function addCardServer(card) {
   })
   .finally (() => {
     renderLoading(false);
+    cardForm.reset();
+    cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
+    closePopup(document.querySelector('.popup_opened'));
   })
 }
 
@@ -40,7 +43,6 @@ export function likeAdd(cardId) {
     })
     .then(res => {
       if (res.ok) {
-        console.log(res);
         return res.json();
       }
       return Promise.reject(`Ошибка ${res.status}`);
@@ -61,7 +63,7 @@ export function likeRemove(cardId) {
 }
 
 export function addAvatar(avatarUrl) {
-  console.log(avatarUrl);
+  renderLoading(true);
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
@@ -73,12 +75,43 @@ export function addAvatar(avatarUrl) {
   })
   .then(res => {
   if (res.ok) {
-    console.log(res);
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status}`); 
   })
+  .finally (() => {
+    renderLoading(false);
+    closePopup(document.querySelector('.popup_opened'));
+  })
 }
+
+export function addProfileServer(name, profession) {
+  return fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
+      method: 'PATCH',
+      headers: {
+        authorization: 'e67bb179-254e-4b3c-8860-7a122085afb4',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        about: profession
+      })
+    })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  })
+  .catch(err => {
+    renderError(`Ошибка ${err}`);
+  })
+  .finally (() => {
+    renderLoading(false);
+    closePopup(document.querySelector('.popup_opened'));
+  })
+}
+
 
 function loadCards() {
   return fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
@@ -99,4 +132,5 @@ export const deleteCard = (cardId) => {
 }
 
 export {loadCards, addCardServer};
-import { profileName, profileProfession, renderLoading } from "./modal.js";
+import { profileName, profileProfession, renderLoading, closePopup, closeByClick  } from "./modal.js";
+import { cardForm } from "./card.js";
