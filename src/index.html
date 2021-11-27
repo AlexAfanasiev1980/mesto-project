@@ -13,11 +13,13 @@
     <main class="content">
       <section class="profile">
         <div class="profile__container">
-          <img src="<%=require('./images/Avatar.jpg')%>" class="profile__avatar" alt="Аватар">
+          <div class="profile__image-container">
+            <img src="<%=require('./images/Avatar.jpg')%>" class="profile__avatar" alt="Аватар">
+          </div>
           <div class="profile__info">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button type="button" class="profile__edit-button"></button>
-            <p class="profile__profession">Исследователь океана</p>
+            <p class="profile__profession"></p>
           </div>
         </div>
         <button type="button" class="profile__add-button"></button>
@@ -55,12 +57,21 @@
       </div>
     </div>
     <div class="popup popup_type_avatar">
-      <div class="popup__container">
+      <div class="popup__container popup__container_type_avatar">
         <h3 class="popup__heading">Обновить аватар</h3>
         <form action="#" class="form popup__avatar" name="avatar" novalidate>
           <input type="url" class="form__input popup__item" name="link-avatar" id="link-avatar" value="" placeholder="Ссылка на картинку" required/>
           <span class="form__input-error link-avatar-error"></span>
           <button type="submit" class="popup__button">Сохранить</button>
+        </form>
+        <button type="button" class="popup__close"></button>
+      </div>
+    </div>
+    <div class="popup popup_type_accept">
+      <div class="popup__container popup__container_type_accept">
+        <h3 class="popup__heading">Вы уверены?</h3>
+        <form action="#" class="form popup__accept" name="accept" novalidate>
+          <button type="submit" class="popup__button">Да</button>
         </form>
         <button type="button" class="popup__close"></button>
       </div>
@@ -77,7 +88,10 @@
         <img src="" class="element__image" alt="">
         <div class="element__title-container">
           <h2 class="element__title"></h2>
+          <div>
           <button type="button" class="element__icon-heart"></button>
+          <p class="element__counter-likes"></p>
+          </div>
         </div>
         <button type="button" class="element__delete"></button>
       </div>
