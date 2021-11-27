@@ -3,6 +3,8 @@ const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
 const fullName = document.querySelector('#full-name');
 const profession = document.querySelector('#profession');
+const avatarUrl = document.querySelector('#link-avatar');
+const avatar = document.querySelector('.profile__avatar');
 
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
@@ -13,7 +15,6 @@ function closeByEscape(evt) {
 }
 
 function closeByClick(evt) {
-  
   if (evt.target.classList.contains("popup__close")||evt.target.classList.contains("popup")||evt.target.classList.contains("popup__button")) {
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
@@ -23,35 +24,16 @@ function closeByClick(evt) {
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
-  // document.addEventListener('keydown', cleanAddCard(popupElement));
 }
 
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
-    // const formElement = popupElement.querySelector('.form');
-    // const inputElements = formElement.querySelectorAll('.form__input');
-    // inputElements.forEach((inputElement) => {
-    //   hideInputError(formElement, inputElement);
-    // })
-    // if (formElement.classList.contains('popup__card-content') && (!evt.target.classList.contains('popup__button'))) {
-    //   formElement.reset();
-    // }
 }
 
-// function cleanAddCard(popupElement) {
-//   console.log(popupElement);
-//   const formElement = popupElement.querySelector('.form');
-//   document.removeEventListener('keydown', cleanAddCard(popupElement));
-//   console.log(formElement);
-//   if (popupElement.classList.contains('popup__card-content') && (!evt.target.classList.contains('popup__button'))) {
-//      formElement.reset();
-//   }
-// }
-
 function submitFormProfile(evt) {
-  closeByClick(evt);
   profileName.textContent = fullName.value;
   profileProfession.textContent = profession.value;
+  renderLoading(true);
   fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
       method: 'PATCH',
       headers: {
@@ -62,8 +44,43 @@ function submitFormProfile(evt) {
         name: profileName.textContent,
         about: profileProfession.textContent
       })
-    }); 
+    })
+  .then(res => {
+    closeByClick(evt);
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  })
+  .catch(err => {
+    renderError(`Ошибка ${err}`);
+  })
+  .finally (() => {
+    renderLoading(false);
+  })
 }
 
-export {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick};
+function renderLoading(isLoading) {
+  const openedPopup = document.querySelector('.popup_opened');
+  console.log(openedPopup);
+  const buttonPopup = openedPopup.querySelector('.popup__button');
+  if (isLoading) {
+    buttonPopup.textContent = 'Сохранение...';
+  } else {
+    if (openedPopup.classList.contains('popup_type_card')) {
+      buttonPopup.textContent = 'Создать';
+    } else {
+      buttonPopup.textContent = 'Сохранить';
+    }
+  }
+}
+
+function replaceAvatar(evt) {
+  avatar.src = avatarUrl.value;
+  addAvatar(avatarUrl.value)
+  .then(res => console.log(res))
+}
+
+export {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick, replaceAvatar, avatar, renderLoading};
 import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation} from './validate.js';
+import { addAvatar } from './api.js';
