@@ -67,9 +67,6 @@ fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
       addCards();
     }); 
 
-
-
-
 import './index.css';
 import {addCards, createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline, popupAccept} from '../components/card.js';
 import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation} from '../components/validate.js';
