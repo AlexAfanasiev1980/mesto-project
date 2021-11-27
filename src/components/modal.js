@@ -10,7 +10,7 @@ function closeByEscape(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
-    
+    document.removeEventListener('keydown', closeByEscape);
   }
 }
 

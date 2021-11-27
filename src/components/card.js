@@ -15,6 +15,7 @@ function createCard(cardData) {
   const counterLikes = userElement.querySelector('.element__counter-likes');
   image.src = cardData.link;
   image.alt = 'Фото ' + cardData.name;
+  counterLikes.textContent = cardData.likes;
   userElement.querySelector('.element__title').textContent = cardData.name;
   userElement.id = cardData.card_id;
   like.addEventListener('click', () => {
