@@ -2,11 +2,11 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const avatarButton = document.querySelector('.profile__image-container');
 const popupCloseButtons = document.querySelectorAll('.popup__close');
-const popupAvatar = document.querySelector('.popup_type_avatar');
+
 const popups = document.querySelectorAll('.popup');
 const profileForm = document.querySelector('.popup__admin');
 const acceptForm = document.querySelector('.popup__accept');
-
+let userId;
 
 editButton.addEventListener('click', function () {
   document.querySelector('#full-name').value = profileName.textContent;
@@ -26,17 +26,15 @@ profileForm.addEventListener('submit', submitFormProfile);
 cardForm.addEventListener('submit', submitFormAddCard);
 
 acceptForm.addEventListener('submit', () => {
-  const deletedCard = document.querySelector('.element__deletion');
+  const deletedCard = document.getElementById(`${cardIdDeleted}`);
+  console.log(deletedCard);
   deletedCard.remove();
   deleteCard(deletedCard.id)
-  .then ((res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`)
-  }))
   .then (() => {
     closePopup(document.querySelector('.popup_type_accept'));
+  })
+  .catch(err => {
+    renderError(`Ошибка ${err}`);
   })
 })
 
@@ -55,22 +53,43 @@ enableValidation({
   errorClass: 'form__input-error_active'
 }); 
 
-fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
-    headers: {
-      authorization: 'e67bb179-254e-4b3c-8860-7a122085afb4'
-    }
+
+Promise.all([loadDateServer(), loadCards()])
+.then(([userData, cards]) => {
+  avatar.src = userData.avatar;
+  profileName.textContent = userData.name;
+  profileProfession.textContent = userData.about;
+  document.querySelector('.profile__avatar').src = userData.avatar;
+  userId = userData._id;
+
+  const initialCards = [];
+  let objectCard = new Object();
+  cards.forEach((element, index) => {
+    objectCard = {};
+    objectCard.name = element.name;
+    objectCard.link = element.link;
+    objectCard.likes = element.likes.length;
+    objectCard.arrlikes = element.likes;
+    objectCard.cardUserId = element.owner._id;
+    objectCard.username = element.owner.name;
+    objectCard.card_id = element._id;
+    initialCards[index] = objectCard;
+  });
+  return initialCards;
+})
+.then((initialCards) => {
+  initialCards.forEach(cardData => {
+    const newCard = createCard(cardData);
+    usersOnline.prepend(newCard)
   })
-    .then(res => res.json())
-    .then((result) => {
-      avatar.src = result.avatar;
-      profileName.textContent = result.name;
-      profileProfession.textContent = result.about;
-      document.querySelector('.profile__avatar').src = result.avatar;
-      addCards();
-    }); 
+})
+.catch(err => {
+  renderError(`Ошибка ${err}`);
+}) 
 
 import './index.css';
-import {addCards, createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline, popupAccept} from '../components/card.js';
+import {createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline, popupAccept, cardIdDeleted} from '../components/card.js';
 import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation} from '../components/validate.js';
-import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick, replaceAvatar, avatar} from '../components/modal.js';
-import { loadCards, addCardServer, deleteCard, addAvatar, addProfileServer } from '../components/api.js';
+import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick, replaceAvatar, avatar, popupAvatar} from '../components/modal.js';
+import { loadCards, addCardServer, deleteCard, addAvatar, addProfileServer, loadDateServer } from '../components/api.js';
+export {userId}
