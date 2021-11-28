@@ -27,7 +27,6 @@ cardForm.addEventListener('submit', submitFormAddCard);
 
 acceptForm.addEventListener('submit', () => {
   const deletedCard = document.querySelector('.element__deletion');
-  closePopup(document.querySelector('.popup_type_accept'));
   deletedCard.remove();
   deleteCard(deletedCard.id)
   .then ((res => {
@@ -36,6 +35,9 @@ acceptForm.addEventListener('submit', () => {
     }
     return Promise.reject(`Ошибка ${res.status}`)
   }))
+  .then (() => {
+    closePopup(document.querySelector('.popup_type_accept'));
+  })
 })
 
 //слушатели для закрытия попапа при нажатии на оверлей

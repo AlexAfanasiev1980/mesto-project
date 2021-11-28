@@ -21,9 +21,21 @@ function createCard(cardData) {
   like.addEventListener('click', () => {
     if (like.classList.contains('element__icon-heart_active')) {
       likeRemove(cardData.card_id)
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      }) 
       counterLikes.textContent--;
     } else {
       likeAdd(cardData.card_id)
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
       counterLikes.textContent++;
     }
     like.classList.toggle('element__icon-heart_active');
@@ -72,8 +84,28 @@ function submitFormAddCard(evt) {
       username: profileName.textContent,
       likes: 0
     };
-    addCardServer(card);
-    addCard(card);
+    renderLoading(true);
+    addCardServer(card)
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    }) 
+    .then ((res) => {
+      card['card_id'] = res._id;
+      addCard(card);
+    })
+    .catch(err => {
+      renderError(`Ошибка ${err}`);
+    })
+    .finally (() => {
+      renderLoading(false);
+      cardForm.reset();
+      cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
+      closePopup(document.querySelector('.popup_opened'));
+    })
+    
   }
 }
 
@@ -104,5 +136,5 @@ function addCards() {
 }
 
 export {addCards, createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline, popupAccept};
-import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, closeByClick} from './modal.js';
+import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, closeByClick, renderLoading} from './modal.js';
 import {loadCards, addCardServer, deleteCard, likeAdd, likeRemove} from './api.js';
