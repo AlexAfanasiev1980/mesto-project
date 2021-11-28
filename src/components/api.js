@@ -7,7 +7,6 @@ const config = {
 }
 
 function addCardServer(card) {
-  renderLoading(true);
   return fetch(`${config.baseUrl}/cards`, {
       method: 'POST',
       headers: {
@@ -19,21 +18,6 @@ function addCardServer(card) {
         link: card.link
       })
     })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
-  }) 
-  .catch(err => {
-    renderError(`Ошибка ${err}`);
-  })
-  .finally (() => {
-    renderLoading(false);
-    cardForm.reset();
-    cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
-    closePopup(document.querySelector('.popup_opened'));
-  })
 }
 
 export function likeAdd(cardId) {
@@ -41,12 +25,7 @@ export function likeAdd(cardId) {
     method: 'PUT',
     headers: config.headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    }) 
+  
 }
 
 export function likeRemove(cardId) {
@@ -54,34 +33,18 @@ export function likeRemove(cardId) {
     method: 'DELETE',
     headers: config.headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    }) 
+    
 }
 
-export function addAvatar(avatarUrl) {
-  renderLoading(true);
+export function addAvatar(avatarUrl, nameprofile, profession) {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
-      name: profileName.textContent,
-      about: profileProfession.textContent,
+      name: nameprofile,
+      about: profession,
       avatar: avatarUrl
     })
-  })
-  .then(res => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`); 
-  })
-  .finally (() => {
-    renderLoading(false);
-    closePopup(document.querySelector('.popup_opened'));
   })
 }
 
@@ -97,19 +60,6 @@ export function addProfileServer(name, profession) {
         about: profession
       })
     })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
-  })
-  .catch(err => {
-    renderError(`Ошибка ${err}`);
-  })
-  .finally (() => {
-    renderLoading(false);
-    closePopup(document.querySelector('.popup_opened'));
-  })
 }
 
 
@@ -132,5 +82,3 @@ export const deleteCard = (cardId) => {
 }
 
 export {loadCards, addCardServer};
-import { profileName, profileProfession, renderLoading, closePopup, closeByClick  } from "./modal.js";
-import { cardForm } from "./card.js";

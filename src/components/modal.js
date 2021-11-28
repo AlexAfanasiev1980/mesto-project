@@ -34,7 +34,20 @@ function submitFormProfile(evt) {
   profileName.textContent = fullName.value;
   profileProfession.textContent = profession.value;
   renderLoading(true);
-  addProfileServer(profileName.textContent, profileProfession.textContent);
+  addProfileServer(profileName.textContent, profileProfession.textContent)
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  })
+  .catch(err => {
+    renderError(`Ошибка ${err}`);
+  })
+  .finally (() => {
+    renderLoading(false);
+    closePopup(document.querySelector('.popup_opened'));
+  })
 }
 
 function renderLoading(isLoading) {
@@ -53,8 +66,18 @@ function renderLoading(isLoading) {
 
 function replaceAvatar(evt) {
   avatar.src = avatarUrl.value;
-  addAvatar(avatarUrl.value)
-  .then(res => console.log(res))
+  renderLoading(true);
+  addAvatar(avatarUrl.value, profileName.textContent, profileProfession.textContent)
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`); 
+    })
+  .finally (() => {
+    renderLoading(false);
+    closePopup(document.querySelector('.popup_opened'));
+  })
 }
 
 export {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick, replaceAvatar, avatar, renderLoading};
