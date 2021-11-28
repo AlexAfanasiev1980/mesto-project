@@ -6,6 +6,7 @@ const cardForm = document.querySelector('.popup__card-content');
 const usersOnline = document.querySelector('.elements');
 const popupText = document.querySelector('.popup__text');
 const popupAccept = document.querySelector('.popup_type_accept');
+let cardIdDeleted;
 
 function createCard(cardData) {
   const userTemplate = document.querySelector("#element").content;
@@ -21,44 +22,43 @@ function createCard(cardData) {
   like.addEventListener('click', () => {
     if (like.classList.contains('element__icon-heart_active')) {
       likeRemove(cardData.card_id)
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      }) 
-      counterLikes.textContent--;
+      .then ((result) => {
+        counterLikes.textContent = result.likes.length;
+        like.classList.toggle('element__icon-heart_active');
+      })
+      .catch(err => {
+        renderError(`Ошибка ${err}`);
+      })
     } else {
       likeAdd(cardData.card_id)
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
+      .then ((result) => {
+        counterLikes.textContent = result.likes.length;
+        like.classList.toggle('element__icon-heart_active');
       })
-      counterLikes.textContent++;
+      .catch(err => {
+        renderError(`Ошибка ${err}`);
+      })
     }
-    like.classList.toggle('element__icon-heart_active');
   });
   cardData.arrlikes.forEach((element) => {
-    if (element.name === profileName.textContent) {
+    if (element._id === userId) {
       like.classList.add('element__icon-heart_active');
     }
   })
   const deleteButton = userElement.querySelector('.element__delete');
-  if (cardData.username === profileName.textContent) {
+  if (cardData.cardUserId === userId) {
       deleteButton.addEventListener('click', function () {
       const listItem = deleteButton.closest('.element');
-      listItem.classList.add('element__deletion');
+      cardIdDeleted = listItem.id;
       openPopup(popupAccept);
     });
   } else {
     deleteButton.classList.add('element__delete_inactive');
   }
   image.addEventListener('click', function () {
-    popupText.textContent = userElement.querySelector('.element__title').textContent;
-    popupImage.src = image.src;
-    popupImage.alt = image.alt;
+    popupText.textContent = cardData.name;
+    popupImage.src = cardData.link;
+    popupImage.alt = cardData.name;
     openPopup(popupTypeImage);
     });
   return userElement;
@@ -85,56 +85,23 @@ function submitFormAddCard(evt) {
       likes: 0
     };
     renderLoading(true);
-    addCardServer(card)
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    }) 
+    addCardServer(card) 
     .then ((res) => {
       card['card_id'] = res._id;
+      card['cardUserId'] = res.owner._id;
       addCard(card);
+      renderLoading(false);
+      cardForm.reset();
+      cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
+      closePopup(popupCard);
     })
     .catch(err => {
       renderError(`Ошибка ${err}`);
     })
-    .finally (() => {
-      renderLoading(false);
-      cardForm.reset();
-      cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
-      closePopup(document.querySelector('.popup_opened'));
-    })
-    
   }
 }
 
-function addCards() {
-  loadCards()
-  .then(res => res.json())
-  .then((result) => {
-    let initialCards = [];
-    let objectCard = new Object();
-    result.forEach((element, index) => {
-      objectCard = {};
-      objectCard.name = element.name;
-      objectCard.link = element.link;
-      objectCard.likes = element.likes.length;
-      objectCard.arrlikes = element.likes;
-      objectCard.username = element.owner.name;
-      objectCard.card_id = element._id;
-      initialCards[index] = objectCard;
-    });
-    return initialCards;
-  })
-  .then((initialCards) => {
-    initialCards.forEach(cardData => {
-      const newCard = createCard(cardData);
-      usersOnline.prepend(newCard)
-    })
-  })
-}
-
-export {addCards, createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline, popupAccept};
+export {createCard, addCard, submitFormAddCard, popupCard, popupTypeImage, popupImage, cardForm, usersOnline, popupAccept, cardIdDeleted};
 import {openPopup, closePopup, submitFormProfile, popupProfile, profileName, closeByClick, renderLoading} from './modal.js';
 import {loadCards, addCardServer, deleteCard, likeAdd, likeRemove} from './api.js';
+import { userId } from '../pages/index.js';

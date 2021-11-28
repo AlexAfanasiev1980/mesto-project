@@ -5,12 +5,13 @@ const fullName = document.querySelector('#full-name');
 const profession = document.querySelector('#profession');
 const avatarUrl = document.querySelector('#link-avatar');
 const avatar = document.querySelector('.profile__avatar');
+const popupAvatar = document.querySelector('.popup_type_avatar');
+
 
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
-    document.removeEventListener('keydown', closeByEscape);
   }
 }
 
@@ -28,25 +29,20 @@ function openPopup(popupElement) {
 
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closeByEscape);
 }
 
 function submitFormProfile(evt) {
-  profileName.textContent = fullName.value;
-  profileProfession.textContent = profession.value;
   renderLoading(true);
-  addProfileServer(profileName.textContent, profileProfession.textContent)
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
+  addProfileServer(fullName.value, profession.value)
+  .then ((res) => {
+    profileName.textContent = fullName.value;
+    profileProfession.textContent = profession.value;
+    renderLoading(false);
+    closePopup(popupProfile);
   })
   .catch(err => {
     renderError(`Ошибка ${err}`);
-  })
-  .finally (() => {
-    renderLoading(false);
-    closePopup(document.querySelector('.popup_opened'));
   })
 }
 
@@ -65,21 +61,18 @@ function renderLoading(isLoading) {
 }
 
 function replaceAvatar(evt) {
-  avatar.src = avatarUrl.value;
   renderLoading(true);
-  addAvatar(avatarUrl.value, profileName.textContent, profileProfession.textContent)
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`); 
-    })
-  .finally (() => {
+  addAvatar(avatarUrl.value)
+  .then ((res) => {
+    avatar.src = avatarUrl.value;
     renderLoading(false);
-    closePopup(document.querySelector('.popup_opened'));
+    closePopup(popupAvatar);
+  })
+  .catch(err => {
+    renderError(`Ошибка ${err}`);
   })
 }
 
-export {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick, replaceAvatar, avatar, renderLoading};
+export {openPopup, closePopup, submitFormProfile, popupProfile, profileName, profileProfession, closeByClick, replaceAvatar, avatar, renderLoading, popupAvatar};
 import {showInputError, hideInputError, checkInputValidity, setEventListeners, hasInvalidInput, toggleButtonState, enableValidation} from './validate.js';
 import { addAvatar, addProfileServer } from './api.js';
