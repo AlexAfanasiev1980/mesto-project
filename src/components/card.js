@@ -84,19 +84,23 @@ function submitFormAddCard(evt) {
       username: profileName.textContent,
       likes: 0
     };
-    renderLoading(true);
+    renderLoading(true, popupCard);
     addCardServer(card) 
     .then ((res) => {
       card['card_id'] = res._id;
       card['cardUserId'] = res.owner._id;
       addCard(card);
-      renderLoading(false);
       cardForm.reset();
-      cardForm.querySelector('.popup__button').classList.add('popup__button_inactive');
+      const submitButton = cardForm.querySelector('.popup__button');
+      submitButton.classList.add('popup__button_inactive');
+      submitButton.disabled = true;
       closePopup(popupCard);
     })
     .catch(err => {
       renderError(`Ошибка ${err}`);
+    })
+    .finally (() => {
+      renderLoading(false, popupCard);
     })
   }
 }

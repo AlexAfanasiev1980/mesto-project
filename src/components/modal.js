@@ -33,26 +33,27 @@ function closePopup(popupElement) {
 }
 
 function submitFormProfile(evt) {
-  renderLoading(true);
+  renderLoading(true, popupProfile);
   addProfileServer(fullName.value, profession.value)
   .then ((res) => {
     profileName.textContent = fullName.value;
     profileProfession.textContent = profession.value;
-    renderLoading(false);
     closePopup(popupProfile);
   })
   .catch(err => {
     renderError(`Ошибка ${err}`);
   })
+  .finally (() => {
+    renderLoading(false, popupProfile);
+  })
 }
 
-function renderLoading(isLoading) {
-  const openedPopup = document.querySelector('.popup_opened');
-  const buttonPopup = openedPopup.querySelector('.popup__button');
+function renderLoading(isLoading, popup) {
+  const buttonPopup = popup.querySelector('.popup__button');
   if (isLoading) {
     buttonPopup.textContent = 'Сохранение...';
   } else {
-    if (openedPopup.classList.contains('popup_type_card')) {
+    if (popup.classList.contains('popup_type_card')) {
       buttonPopup.textContent = 'Создать';
     } else {
       buttonPopup.textContent = 'Сохранить';
@@ -61,15 +62,17 @@ function renderLoading(isLoading) {
 }
 
 function replaceAvatar(evt) {
-  renderLoading(true);
+  renderLoading(true, popupAvatar);
   addAvatar(avatarUrl.value)
   .then ((res) => {
     avatar.src = avatarUrl.value;
-    renderLoading(false);
     closePopup(popupAvatar);
   })
   .catch(err => {
     renderError(`Ошибка ${err}`);
+  })
+  .finally (() => {
+    renderLoading(false, popupAvatar);
   })
 }
 

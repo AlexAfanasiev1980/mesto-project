@@ -7,10 +7,8 @@ const config = {
 }
 
 export function loadDateServer() {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
-      headers: {
-        authorization: 'e67bb179-254e-4b3c-8860-7a122085afb4'
-      }
+  return fetch(`${config.baseUrl}/users/me`, {
+      headers: config.headers
     })
     .then(checkResponse)
 }
