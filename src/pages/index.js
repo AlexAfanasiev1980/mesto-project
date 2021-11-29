@@ -2,7 +2,6 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const avatarButton = document.querySelector('.profile__image-container');
 const popupCloseButtons = document.querySelectorAll('.popup__close');
-
 const popups = document.querySelectorAll('.popup');
 const profileForm = document.querySelector('.popup__admin');
 const acceptForm = document.querySelector('.popup__accept');
@@ -27,11 +26,10 @@ cardForm.addEventListener('submit', submitFormAddCard);
 
 acceptForm.addEventListener('submit', () => {
   const deletedCard = document.getElementById(`${cardIdDeleted}`);
-  console.log(deletedCard);
-  deletedCard.remove();
   deleteCard(deletedCard.id)
   .then (() => {
-    closePopup(document.querySelector('.popup_type_accept'));
+    deletedCard.remove();
+    closePopup(popupAccept);
   })
   .catch(err => {
     renderError(`Ошибка ${err}`);
